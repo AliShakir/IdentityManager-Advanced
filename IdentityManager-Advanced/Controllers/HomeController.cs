@@ -1,4 +1,5 @@
 using IdentityManager_Advanced.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -17,6 +18,7 @@ namespace IdentityManager_Advanced.Controllers
         {
             return View();
         }
+        [Authorize]
 
         public IActionResult Privacy()
         {
