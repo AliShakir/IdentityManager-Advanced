@@ -14,7 +14,8 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 // Configure Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 // Configure password
 builder.Services.Configure<IdentityOptions>(opt =>
@@ -25,6 +26,12 @@ builder.Services.Configure<IdentityOptions>(opt =>
     opt.Lockout.MaxFailedAccessAttempts = 3;
     opt.Lockout.DefaultLockoutTimeSpan=TimeSpan.FromSeconds(10000);
     opt.SignIn.RequireConfirmedEmail = false;
+});
+
+//
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    opt.AccessDeniedPath = new PathString("/Account/NoAccess");
 });
 var app = builder.Build();
 
