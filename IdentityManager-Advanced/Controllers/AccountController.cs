@@ -66,10 +66,14 @@ namespace IdentityManager_Advanced.Controllers
             if (ModelState.IsValid)
             {
                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, 
-                                    model.RememberMe, lockoutOnFailure: false);
+                                    model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     return LocalRedirect(returnurl);
+                }
+                if (result.IsLockedOut)
+                {
+                    return RedirectToAction("Lockout");
                 }
                 else
                 {
@@ -78,6 +82,22 @@ namespace IdentityManager_Advanced.Controllers
                 }
             }
             return View();
+        }
+        [HttpGet]
+        public IActionResult Lockout()
+        {            
+            return View();
+        }
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ForgotPassword(ForgotPasswordViewModel model)
+        {
+            return View(model);
         }
         private void AddError(IdentityResult result)
         {
