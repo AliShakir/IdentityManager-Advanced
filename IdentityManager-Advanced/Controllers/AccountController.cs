@@ -53,14 +53,15 @@ namespace IdentityManager_Advanced.Controllers
                 {
                     Name = model.Name,
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    CreatedDate = DateTime.Now
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    if(model.RoleSelected != null && model.RoleSelected.Length >0 && model.RoleSelected == UserRoleConstants.Admin)
+                    if(model.RoleSelected != null)
                     {
-                        await _userManager.AddToRoleAsync(user, UserRoleConstants.Admin);
+                        await _userManager.AddToRoleAsync(user, model.RoleSelected);
                     }
                     else
                     {
