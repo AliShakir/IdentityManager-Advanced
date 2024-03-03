@@ -2,5 +2,6 @@
 {
     public interface INumberOfDaysForAccount
     {
+        int Get(string userId);
     }
 }

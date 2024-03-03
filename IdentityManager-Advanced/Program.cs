@@ -34,7 +34,13 @@ builder.Services.Configure<IdentityOptions>(opt =>
     opt.Lockout.DefaultLockoutTimeSpan=TimeSpan.FromSeconds(10000);
     opt.SignIn.RequireConfirmedEmail = false;
 });
-//
+builder.Services.AddAuthentication().AddMicrosoftAccount(opt =>
+{
+    opt.ClientId = "038436cc-769a-4b90-ad51-f2a3dac043f6";
+    opt.ClientSecret = "U3P8Q~9Y0zkHF4d9VmDN8_lRoHLuV.3.yg_PMc.L";
+});
+//value - 
+//id - 
 builder.Services.AddAuthorization(opt =>
 {
     opt.AddPolicy("Admin", policy => policy.RequireRole(UserRoleConstants.Admin));
